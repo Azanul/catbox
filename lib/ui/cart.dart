@@ -50,7 +50,7 @@ class _MyCartState extends State<MyCart> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new ListTile(
-              onTap: () => _navigateToCatDetails(cat, index),
+              onTap: () async => _navigateToCatDetails(await _api.getCartCat(cat), index),
               leading: new Hero(
                 tag: index,
                 child: new CircleAvatar(

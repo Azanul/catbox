@@ -88,6 +88,22 @@ class CatApi {
         .listen((snapshot) => onChange(_fromDocumentSnapshot(snapshot)));
   }
 
+  Cat _fromDocumentSnapshotCart(DocumentSnapshot snapshot) {
+    final data = snapshot.data;
+
+    return new Cat(
+        documentId: snapshot.documentID,
+        externalId: null,
+        name: data['name'],
+        description: data['description'],
+        avatarUrl: data['image_url'],
+        location: null,
+        likeCounter: null,
+        isAdopted: null,
+        pictures: null,
+        cattributes: null);
+  }
+
   Future<bool> inCart(Cat cat) async {
     final hank = await Firestore.instance
         .collection('users')
@@ -120,7 +136,7 @@ class CatApi {
   Future<List<Cat>> getCartItems() async {
     return (await Firestore.instance.collection('users').document('${this.firebaseUser.uid}').collection('cart').getDocuments())
         .documents
-        .map((e) => null)
+        .map((snapshot) => _fromDocumentSnapshotCart(snapshot))
         .toList();
   }
 
@@ -130,5 +146,12 @@ class CatApi {
         .document(cat.documentId)
         .snapshots()
         .listen((snapshot) => onChange(_fromDocumentSnapshot(snapshot)));
+  }
+
+  Future<Cat> getCartCat(Cat snap) async {
+     return _fromDocumentSnapshot(await Firestore.instance
+        .collection('cats')
+        .document(snap.documentId)
+        .get());
   }
 }
