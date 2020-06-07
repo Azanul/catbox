@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CatApi {
-  static FirebaseAuth _auth = FirebaseAuth.instance;
+  static FirebaseAuth auth = FirebaseAuth.instance;
   static GoogleSignIn _googleSignIn = new GoogleSignIn();
 
   FirebaseUser firebaseUser;
@@ -21,14 +21,14 @@ class CatApi {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final AuthResult authResult = await auth.signInWithCredential(credential);
     FirebaseUser user = authResult.user;
     assert(user.email != null);
     assert(user.displayName != null);
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    FirebaseUser currentUser = await _auth.currentUser();
+    FirebaseUser currentUser = await auth.currentUser();
     assert(user.uid == currentUser.uid);
 
     return new CatApi(user);

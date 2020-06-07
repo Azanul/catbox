@@ -140,7 +140,7 @@ class _CatListState extends State<CatList> {
       body: _buildBody(),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          // Do something when FAB is pressed
+          CatApi.auth.signOut();
         },
         tooltip: _api != null ? 'Signed-in: ' + _api.firebaseUser.displayName : 'Not Signed-in',
         backgroundColor: Colors.blue,

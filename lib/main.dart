@@ -29,12 +29,26 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _crrindex = 0;
   Color _crrBG = Color(0xFF398AE5);
+  PageController _controller;
+  @override
+  void initState(){
+    super.initState();
+    _controller =  new PageController(initialPage: _crrindex);
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> _tabs = [MyDashboard(), new CatList(), new MyCart()];
-    Widget _crrPage = _tabs[_crrindex];
     return new Scaffold(
-      body: _crrPage,
+      body: PageView(
+        controller: _controller,
+        children: _tabs,
+          onPageChanged: (newPage) {
+          setState(() {
+            this._crrindex = newPage;
+          });
+        }
+        ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: _crrBG,
         items: [
@@ -43,10 +57,8 @@ class _HomeState extends State<Home> {
           Icon(Icons.shopping_cart, size: 30)
         ],
         onTap: (index) {
-          setState(
-                () {
-                _crrindex = index;
-                _crrPage = _tabs[_crrindex];
+          this._controller.animateToPage(index, duration: Duration(milliseconds: 250), curve: Curves.easeInOut);
+          setState(() {
                 switch (index){
                   case 0: _crrBG = Color(0xFF398AE5);
                           break;
@@ -57,7 +69,7 @@ class _HomeState extends State<Home> {
             },
           );
         },
-        index: 0,
+        index: _crrindex,
       ),
     );
   }
