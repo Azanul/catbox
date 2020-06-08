@@ -10,10 +10,7 @@ class MyDashboard extends StatefulWidget {
 class _DashboardState extends State<MyDashboard>{
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(gradient: kGradient),
-        child: Scaffold(
+    return Scaffold(
             backgroundColor: Colors.transparent,
             body: ListView(
               children: <Widget>[
@@ -47,7 +44,7 @@ class _DashboardState extends State<MyDashboard>{
                   ),
                 )
               ],
-            )));
+            ));
   }
 
   Widget _generateOption(IconData icon, Color color, String title, String sub) {

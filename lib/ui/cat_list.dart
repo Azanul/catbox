@@ -136,14 +136,14 @@ class _CatListState extends State<CatList> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.transparent,
       body: _buildBody(),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
           CatApi.auth.signOut();
         },
         tooltip: _api != null ? 'Signed-in: ' + _api.firebaseUser.displayName : 'Not Signed-in',
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.transparent,
         child: new CircleAvatar(
           backgroundImage: _profileImage,
           radius: 50.0,

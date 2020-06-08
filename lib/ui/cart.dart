@@ -123,7 +123,7 @@ class _MyCartState extends State<MyCart> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.transparent,
       body: _buildBody(),
     );
   }
