@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:catbox/utils/constants.dart';
+import 'package:catbox/utils/routes.dart';
+import 'package:catbox/ui/liked.dart';
 
 class MyDashboard extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _DashboardState extends State<MyDashboard>{
                     padding: EdgeInsets.only(top: 40.0),
                     children: [
                       _generateOption(Icons.favorite, Colors.redAccent,
-                          "Favorites", "All the pets that you love"),
+                          "Favorites", "All the pets that you love", tap: Liked()),
                       _generateOption(
                           Icons.home, Colors.blueGrey, "Find a home", "Cats you put for donation"),
                       _generateOption(
@@ -47,7 +48,7 @@ class _DashboardState extends State<MyDashboard>{
             ));
   }
 
-  Widget _generateOption(IconData icon, Color color, String title, String sub) {
+  Widget _generateOption(IconData icon, Color color, String title, String sub, {Widget tap}) {
     return Padding(
         padding: EdgeInsets.only(top: 20.0, left: 40.0, right: 40.0),
         child: Container(
@@ -65,10 +66,10 @@ class _DashboardState extends State<MyDashboard>{
                     color: color,
                     size: 45.0,
                   ),
-                  onPressed: null),
+                  onPressed:() => Navigator.push(context, SlideLeftRoute(page: tap))),
               SizedBox(width: 8.0),
               FlatButton(
-                  onPressed: null,
+                  onPressed: () => Navigator.push(context, SlideLeftRoute(page: tap)),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

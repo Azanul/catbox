@@ -52,22 +52,28 @@ class CatApi {
 
   Future likeCat(Cat cat) async {
     await Firestore.instance
-        .collection('likes')
-        .document('${cat.documentId}:${this.firebaseUser.uid}')
-        .setData({});
+        .collection('users')
+        .document('${this.firebaseUser.uid}')
+        .collection('liked')
+        .document('${cat.documentId}')
+        .setData({'name':cat.name, 'description':cat.description, 'image_url':cat.avatarUrl});
   }
 
   Future unlikeCat(Cat cat) async {
     await Firestore.instance
-        .collection('likes')
-        .document('${cat.documentId}:${this.firebaseUser.uid}')
+        .collection('users')
+        .document('${this.firebaseUser.uid}')
+        .collection('liked')
+        .document('${cat.documentId}')
         .delete();
   }
 
   Future<bool> hasLikedCat(Cat cat) async {
     final like = await Firestore.instance
-        .collection('likes')
-        .document('${cat.documentId}:${this.firebaseUser.uid}')
+        .collection('users')
+        .document('${this.firebaseUser.uid}')
+        .collection('liked')
+        .document('${cat.documentId}')
         .get();
 
     return like.exists;
@@ -153,5 +159,12 @@ class CatApi {
         .collection('cats')
         .document(snap.documentId)
         .get());
+  }
+
+  Future<List<Cat>> getLikedCats() async {
+    return (await Firestore.instance.collection('users').document('${this.firebaseUser.uid}').collection('liked').getDocuments())
+        .documents
+        .map((snapshot) => _fromDocumentSnapshotCart(snapshot))
+        .toList();
   }
 }
