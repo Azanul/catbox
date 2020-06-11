@@ -68,3 +68,42 @@ class SlideLeftRoute<T> extends PageRouteBuilder {
         ),
   );
 }
+
+class EnterExitRoute extends PageRouteBuilder {
+  final Widget enterPage;
+  final Widget exitPage;
+  EnterExitRoute({this.exitPage, this.enterPage})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    enterPage,
+    transitionDuration: Duration(seconds: 1),
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        Stack(
+          children: <Widget>[
+            SlideTransition(
+              position: new Tween<Offset>(
+                begin: const Offset(0.0, 0.0),
+                end: const Offset(0.0, -1.0),
+              ).animate(CurvedAnimation(parent: animation, curve: Curves.elasticIn)),
+              child: exitPage,
+            ),
+            SlideTransition(
+              position: new Tween<Offset>(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(parent: animation, curve: Curves.elasticOut)),
+              child: enterPage,
+            )
+          ],
+        ),
+  );
+}

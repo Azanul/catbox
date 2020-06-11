@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:catbox/utils/routes.dart';
 import 'package:catbox/ui/liked.dart';
 
-class MyDashboard extends StatefulWidget {
-  @override
-  _DashboardState createState()=> new _DashboardState();
-}
-
-class _DashboardState extends State<MyDashboard>{
+class MyDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +29,13 @@ class _DashboardState extends State<MyDashboard>{
                     primary: false,
                     padding: EdgeInsets.only(top: 40.0),
                     children: [
-                      _generateOption(Icons.favorite, Colors.redAccent,
+                      _generateOption(context, Icons.favorite, Colors.redAccent,
                           "Favorites", "All the pets that you love", tap: Liked()),
-                      _generateOption(
+                      _generateOption(context,
                           Icons.home, Colors.blueGrey, "Find a home", "Cats you put for donation"),
-                      _generateOption(
+                      _generateOption(context,
                           Icons.settings, Colors.blueGrey, "Settings", " "),
-                      _generateOption(Icons.exit_to_app, Colors.grey, "Logout", "")
+                      _generateOption(context, Icons.exit_to_app, Colors.grey, "Logout", "")
                     ],
                   ),
                 )
@@ -48,7 +43,7 @@ class _DashboardState extends State<MyDashboard>{
             ));
   }
 
-  Widget _generateOption(IconData icon, Color color, String title, String sub, {Widget tap}) {
+  Widget _generateOption(BuildContext parent, IconData icon, Color color, String title, String sub, {Widget tap}) {
     return Padding(
         padding: EdgeInsets.only(top: 20.0, left: 40.0, right: 40.0),
         child: Container(
@@ -66,10 +61,10 @@ class _DashboardState extends State<MyDashboard>{
                     color: color,
                     size: 45.0,
                   ),
-                  onPressed:() => Navigator.push(context, SlideLeftRoute(page: tap))),
+                  onPressed:() => Navigator.push(parent, EnterExitRoute(exitPage: this,enterPage: tap))),
               SizedBox(width: 8.0),
               FlatButton(
-                  onPressed: () => Navigator.push(context, SlideLeftRoute(page: tap)),
+                  onPressed: () => Navigator.push(parent, EnterExitRoute(exitPage: this,enterPage: tap)),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

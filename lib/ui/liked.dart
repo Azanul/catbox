@@ -135,7 +135,7 @@ class _LikedState extends State<Liked> {
             Color(0xFFFF2F60),
           ],
           stops: [0.1, 0.4, 0.7, 0.9],
-        )),
+        ), borderRadius: BorderRadius.circular(15.0)),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: _buildBody(),
