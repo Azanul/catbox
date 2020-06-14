@@ -80,11 +80,7 @@ class _LikedState extends State<Liked> {
 
   _navigateToCatDetails(Cat cat, Object avatarTag) {
     Navigator.of(context).push(
-      FadePageRoute(
-        builder: (c) {
-          return CatDetailsPage(cat, avatarTag: avatarTag);
-        },
-        settings: RouteSettings(),
+      EnterExitRoute(exitPage: this.widget, enterPage: CatDetailsPage(cat, avatarTag: avatarTag)
       ),
     );
   }

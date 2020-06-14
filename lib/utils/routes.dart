@@ -18,9 +18,9 @@ class FadePageRoute<T> extends MaterialPageRoute<T> {
       Animation<double> secondaryAnimation,
       Widget child) {
 
-//    if (settings.name == "initial") {
-//      return child;
-//    }
+    if (settings.name == "initial") {
+      return child;
+    }
     // Fades between routes. (If you don't want any animation, just return child.)
     return FadeTransition(opacity: animation, child: child);
   }
@@ -107,6 +107,29 @@ class EnterExitRoute extends PageRouteBuilder {
               child: enterPage,
             )
           ],
+        ),
+  );
+}
+
+class ScaleRoute<T> extends PageRouteBuilder {
+  final Widget page;
+
+  ScaleRoute({this.page})
+      : super(
+    pageBuilder: (BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,) =>
+    page,
+    transitionsBuilder: (BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,) =>
+        FadeTransition(
+          opacity: Tween<double>(
+            begin: 0,
+            end: 1,
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.elasticIn, reverseCurve: Curves.elasticOut)),
+//          child: child,
         ),
   );
 }
